@@ -4,11 +4,9 @@ object camion {
 
     method pesoTotal() = cosasCargadas.sum({p => p.peso()}) + tara
 
+    method peligrosidadTotal() = cosasCargadas.sum({p => p.peligrosidad()})
 
-    
-    method peso(){
-        return tara
-    }
+    method ningunObjetoSupera_Peligrosidad(nivelPeligrosidad) = self.peligrosidadTotal() > nivelPeligrosidad
 
     method cargarCosa(unaCosa) = cosasCargadas.add(unaCosa)
 
@@ -23,10 +21,8 @@ object camion {
     method obtenerTodasLasCosasQueSuperen(unaPeligrosidad) = cosasCargadas.filter({p => p.peligrosidad() >= unaPeligrosidad})
 
     method obtenerTodasLasPeligrosidadesQueSuperenCosa(unaCosa) = cosasCargadas.filter({c => c.peligrosidad() >= unaCosa.peligrosidad()})
-
-    method estaExcedidoDePeso(){ //TODO! IMPLEMENTAR CONSIGNAS AL README.MD
-        
-    }
+    
+    method estaExcedidoDePeso() = self.pesoTotal() > 2500
 
 
     
