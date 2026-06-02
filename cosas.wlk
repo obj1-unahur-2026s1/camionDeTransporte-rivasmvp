@@ -64,6 +64,7 @@ object embalaje{
 
     var cosaEnvuelta = 0
 
+    method peligrosidad() = cosaEnvuelta.peligrosidad() / 2
     method peso(){
         var peso = 0
 
