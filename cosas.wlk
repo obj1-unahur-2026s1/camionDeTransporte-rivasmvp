@@ -5,7 +5,11 @@ object knightRider {
 
 object bumblebee{
     const property peso = 800
-    var property estaEnAuto = true
+    var property estaEnAuto = false
+
+    method transformar(){ 
+        estaEnAuto = !estaEnAuto
+    } 
 
     method peligrosidad() {
         if (estaEnAuto){
@@ -17,47 +21,53 @@ object bumblebee{
     }}
 
 object paqueteDeLadrillos{
-    var property cantLadrillos = 1
-
+    var property cantLadrillos = 0
     method peso() = cantLadrillos * 2
-    var property peligrosidad = 2 
+
+    method peligrosidad() = 2
+
+    method apilarLadrillos(nroLadrillos){
+        cantLadrillos = cantLadrillos + nroLadrillos
+    }
 
 }
 object arenaAGranel{
-    var peligrosidad = 1
-    var peso = 0
+    var property peligrosidad = 1
+    var property peso = 0
 
 }
 object bateriaAntiaerea{
-    var property tieneMisiles = true
+    var property tieneMisiles = false
 
     method peligrosidad() = if (tieneMisiles) 100 else 0
 
-    method peso() = if (self.tieneMisiles()) 300 else 200
-    
+    method peso() = if (self.tieneMisiles()) 800 else 200
+    method cargarMisiles(){
+        tieneMisiles = !tieneMisiles
+    }
     }
 
 object contenedorPortuario{
-    const property cosasDentro = [bumblebee , bateriaAntiaerea] 
+    const property cosasDentro = [] 
     method peso() = cosasDentro.sum({c => c.peso()}) + 100
 
     method añadirCosa(unaCosa) = cosasDentro.add(unaCosa)
     method quitarCosa(unaCosa) = cosasDentro.remove(unaCosa)
-
-    method cosasDentroPeligrosidad() = cosasDentro.map({c => c.peligrosidad()})
-
     
     method peligrosidad() {
         if (!cosasDentro.isEmpty()){
-            return self.cosasDentroPeligrosidad().max()}
+
+            var cosaMasPeligrosa = cosasDentro.max({c => c.peligrosidad()})
+            return cosaMasPeligrosa.peligrosidad()}
+
         else{
             return 0
     }}
 }
 
 object residuos{
-    var property peso = 900
-    const property peligrosidad = 1
+    var property peso = 30
+    var property peligrosidad = 1
 }
 
 object embalaje{

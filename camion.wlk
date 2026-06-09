@@ -1,18 +1,12 @@
 import cosas.*
 object camion {
-    const cosasCargadas = []
+    const property cosasCargadas = []
     const tara = 1000
-
 
     method cosaMasPesadaCargada() = cosasCargadas.max({p => p.peso()})
 
-
     method unaCosaPesaEntre_Y_(min , max){
-        return cosasCargadas.any({c => c.peso().between(min, max)})
-            
-
-    }
-
+        return cosasCargadas.any({c => c.peso().between(min, max)})}
 
     method pesoTotal() = cosasCargadas.sum({p => p.peso()}) + tara
 
@@ -35,6 +29,8 @@ object camion {
     method obtenerTodasLasPeligrosidadesQueSuperenCosa(unaCosa) = cosasCargadas.filter({c => c.peligrosidad() >= unaCosa.peligrosidad()})
     
     method estaExcedidoDePeso() = self.pesoTotal() > 2500
+
+    method descargarTodasLasCosas() = cosasCargadas.clear()
 
 
     

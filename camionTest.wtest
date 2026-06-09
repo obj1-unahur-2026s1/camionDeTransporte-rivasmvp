@@ -1,9 +1,60 @@
 import camion.*
+import cosas.*
 
-describe "group of test for camion" {
+describe "camionDeTransporte"{
 
-  test "first test" {
-    assert.that(true)
-  }
+    method initialize(){
+        bumblebee.transformar()
+        arenaAGranel.peso(150)
+        bateriaAntiaerea.cargarMisiles()
+        paqueteDeLadrillos.apilarLadrillos(80)
+        embalaje.envolver(paqueteDeLadrillos)
+        camion.cargarCosa(bumblebee)
+        camion.cargarCosa(arenaAGranel)
+        camion.cargarCosa(bateriaAntiaerea)
+        camion.cargarCosa(paqueteDeLadrillos)
+    }
 
-}
+    test "test de cosa mas pesada cargada"{
+        assert.that((camion.cosaMasPesadaCargada().peso()) == bumblebee.peso())
+
+    }
+
+    test " test de una cosa pesa entre _ y _"{
+        assert.that(camion.unaCosaPesaEntre_Y_(799, 801))
+    }
+
+    test "peligrosidad total camion"{
+        assert.equals(118 , camion.peligrosidadTotal())
+
+    }
+
+    test "ninguna peligrosidad supera _ "{
+        assert.that(camion.ningunObjetoSupera_Peligrosidad(101))
+    }
+
+    test "alguna cosa pesa _ "{
+        assert.notThat(camion.algunaCosaPesa(230))
+        residuos.peso(230)
+        camion.cargarCosa(residuos)
+        assert.that(camion.algunaCosaPesa(230))
+    }
+
+    test "primera cosa con peligrosidad_"{
+        camion.descargarTodasLasCosas()
+        assert.throwsException({ camion.primeraCosaConPeligrosidad(150) })
+        residuos.peligrosidad(150)
+        camion.cargarCosa(residuos)
+        assert.equals(residuos , camion.primeraCosaConPeligrosidad(150))
+    }
+
+    test "obtenerTodasLasCosasQueSuperen(unaPeligrosidad)"{
+        camion.descargarTodasLasCosas()
+
+        assert.that((camion.obtenerTodasLasCosasQueSuperen(120).size() == 0))
+
+        camion.cargarCosa(bumblebee)
+        camion.cargarCosa(residuos)
+        assert.that((camion.obtenerTodasLasCosasQueSuperen(1).size() >= 1))
+    }
+}       
